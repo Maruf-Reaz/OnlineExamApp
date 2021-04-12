@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Css {
+
+}
+
+@section Sole {
+    <style>
+        .gcb-table {
+            padding: 3px 10px !important;
+        }
+    </style>
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                @if (ViewBag.UserType == 1)
+                {
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-gradient-danger">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total Teachers</h5>
+                                        <span class="h2 font-weight-bold mb-0 text-white">@ViewBag.TeacherCount</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-white text-default rounded-circle shadow">
+                                            <i class="far fa-users"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-gradient-warning">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total Students</h5>
+                                        <span class="h2 font-weight-bold mb-0 text-white">@ViewBag.StudentCount</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-white text-default rounded-circle shadow">
+                                            <i class="far fa-graduation-cap"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-gradient-success">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total Classes</h5>
+                                        <span class="h2 font-weight-bold mb-0 text-white">@ViewBag.ClassRoomCount</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-white text-default rounded-circle shadow">
+                                            <i class="far fa-home"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-gradient-info">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0 text-white">UpComing Exams</h5>
+                                        <span class="h2 font-weight-bold mb-0 text-white">@ViewBag.UpComingExamCount</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-white text-default rounded-circle shadow">
+                                            <i class="far fa-clipboard"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+
+            </div>
+        </div>
+        @if (ViewBag.UserType == 1)
+        {
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header p-3 border-0">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <h3 class="mb-0 skewed skewed-green d-inline-block text-white ls-1 text-uppercase">Teachers</h3>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-custom">
+                                <tr>
+                                    <th class="text-center align-middle">Name</th>
+                                    <th class="text-center align-middle">Department</th>
+                                    <th class="text-center align-middle">Designation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var teacher in ViewBag.Teachers)
+                                {
+                                    <tr>
+
+                                        <td class="text-center align-middle">@teacher.Name</td>
+                                        <td class="text-center align-middle">@teacher.Department.ShortName</td>
+                                        <td class="text-center align-middle">@teacher.Designation.Name</td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header p-3 border-0">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <h3 class="mb-0 skewed skewed-green d-inline-block text-white ls-1 text-uppercase">Up-Coming Exams</h3>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-custom">
+                                <tr>
+                                    <th class="text-center align-middle">Course Code</th>
+                                    <th class="text-center align-middle">Teacher</th>
+                                    <th class="text-center align-middle">Section</th>
+                                    <th class="text-center align-middle">Date</th>
+                                    <th class="text-center align-middle">Start</th>
+                                    <th class="text-center align-middle">End</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var exam in ViewBag.Exams)
+                                {
+                                    <tr>
+
+                                        <td class="text-center align-middle">@exam.ClassRoom.Course.Code</td>
+                                        <td class="text-center align-middle">@exam.ClassRoom.Teacher.Name</td>
+                                        <td class="text-center align-middle">@exam.ClassRoom.Section.FullName</td>
+                                        <td class="text-center align-middle"> @String.Format("{0:dd-MM-yyyy}", exam.Date)</td>
+                                        <td class="text-center align-middle">@exam.From</td>
+                                        <td class="text-center align-middle">@exam.To</td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+@section Scripts {
+    <script asp-append-version="true" src="~/vendor/chart.js/Chart.min.js"></script>
+    <script asp-append-version="true" src="~/vendor/chart.js/utils.js"></script>
+    @*<script asp-append-version="true" src="~/vendor/chart.js/chartjs-plugin-datalabels.js"></script>*@
+
+   
+}

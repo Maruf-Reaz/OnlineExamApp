@@ -1,0 +1,220 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ExamApp.Models.Common.Authentication.ApplicationUser> UserManager
+@{
+    var user = await UserManager.FindByNameAsync(Context.User.Identity.Name);
+}
+
+<nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
+    <div class="scrollbar-inner">
+        <div class="sidenav-header d-flex align-items-center">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <img asp-append-version="true" src="~/asset/img/tcms.png" class="navbar-brand-img" alt="...">
+            </a>
+            <div class="mx-auto">
+                <div class="sidenav-toggler active" data-action="sidenav-unpin" data-target="#sidenav-main">
+                    <div class="sidenav-toggler-inner">
+                        <i class="sidenav-toggler-line"></i>
+                        <i class="sidenav-toggler-line"></i>
+                        <i class="sidenav-toggler-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-inner">
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <ul class="navbar-nav">
+                    @if (await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="Home" asp-action="Index">
+                                <i class="far fa-tachometer-alt text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="Institutions" asp-action="Index">
+                                <i class="fa fa-home text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Institution</span>
+                            </a>
+                        </li>
+
+                        @if (user.InstitutionId != null)
+                        {
+                            <li class="nav-item nav_level0">
+                                <a class="nav-link position-relative" asp-controller="Departments" asp-action="Index">
+                                    <i class="fa fa-bars text-gray"></i>
+                                    <span class="nav-link-text text-nowrap text-dark">Departments</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item nav_level0">
+                                <a class="nav-link position-relative" asp-controller="AcademicSessions" asp-action="Index">
+                                    <i class="fa fa-clock text-gray"></i>
+                                    <span class="nav-link-text text-nowrap text-dark">Sessions</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#super-admin-option2" data-toggle="collapse" role="button"
+                                   aria-expanded="false" aria-controls="navbar-examples">
+                                    <i class="far fa-cog text-gray"></i>
+                                    <span class="nav-link-text text-dark text-nowrap position-relative">Department Settings</span>
+                                </a>
+                                <div class="collapse nav_level1" id="super-admin-option2">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a asp-controller="Semesters" asp-action="Index" class="nav-link text-nowrap">All Semesters </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Semesters" asp-action="Create" class="nav-link text-nowrap">Add Semesters </a>
+                                        </li>
+
+
+                                        <li class="nav-item">
+                                            <a asp-controller="Sections" asp-action="Index" class="nav-link text-nowrap">All Sections</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Sections" asp-action="Create" class="nav-link text-nowrap">Add Section</a>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#super-admin-option3" data-toggle="collapse" role="button"
+                                   aria-expanded="false" aria-controls="navbar-examples">
+                                    <i class="far fa-cogs text-gray"></i>
+                                    <span class="nav-link-text text-dark text-nowrap position-relative">Teacher Settings</span>
+                                </a>
+                                <div class="collapse nav_level1" id="super-admin-option3">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a asp-controller="Teachers" asp-action="Index" class="nav-link text-nowrap">All Teachers </a>
+                                        </li>
+                                         <li class="nav-item">
+                                            <a asp-controller="Teachers" asp-action="Create" class="nav-link text-nowrap">Add Teacher </a>
+                                        </li>
+
+
+                                        <li class="nav-item">
+                                            <a asp-controller="Designations" asp-action="Index" class="nav-link text-nowrap"> All Designations</a>
+                                        </li>
+                                         <li class="nav-item">
+                                            <a asp-controller="Designations" asp-action="Create" class="nav-link text-nowrap"> Add Designation</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="#super-admin-option4" data-toggle="collapse" role="button"
+                                   aria-expanded="false" aria-controls="navbar-examples">
+                                    <i class="far fa-graduation-cap text-gray"></i>
+                                    <span class="nav-link-text text-dark text-nowrap position-relative">Academic Settings</span>
+                                </a>
+                                <div class="collapse nav_level1" id="super-admin-option4">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a asp-controller="Courses" asp-action="Index" class="nav-link text-nowrap">All Courses </a>
+                                        </li>
+                                         <li class="nav-item">
+                                             <a asp-controller="Courses" asp-action="Create" class="nav-link text-nowrap">Add Course </a>
+                                        </li>
+
+
+                                        <li class="nav-item">
+                                            <a asp-controller="ClassRooms" asp-action="CurrentIndex" class="nav-link text-nowrap"> All Classrooms</a>
+                                        </li>
+                                         <li class="nav-item">
+                                             <a asp-controller="ClassRooms" asp-action="Create" class="nav-link text-nowrap"> Add Classrooms</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#super-admin-option5" data-toggle="collapse" role="button"
+                                   aria-expanded="false" aria-controls="navbar-examples">
+                                    <i class="far fa-users text-gray"></i>
+                                    <span class="nav-link-text text-dark text-nowrap position-relative">Student Settings</span>
+                                </a>
+                                <div class="collapse nav_level1" id="super-admin-option5">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a asp-controller="Students" asp-action="Index" class="nav-link text-nowrap">All Students </a>
+                                        </li>
+                                         <li class="nav-item">
+                                             <a asp-controller="Students" asp-action="Create" class="nav-link text-nowrap">Add Student </a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+
+
+                    }
+                    else if (await UserManager.IsInRoleAsync(user, "Teacher"))
+                    {
+
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="Home" asp-action="Index">
+                                <i class="far fa-tachometer-alt text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="ClassRooms" asp-action="TeacherIndex">
+                                <i class="far fa-paste text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Classes</span>
+                            </a>
+                        </li>
+                           <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="SeriesExams" asp-action="Index">
+                                <i class="far fa-paste text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Series Exams</span>
+                            </a>
+                        </li>
+
+                    }
+                    else if (await UserManager.IsInRoleAsync(user, "Student"))
+                    {
+
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="Home" asp-action="Index">
+                                <i class="far fa-tachometer-alt text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="ClassRooms" asp-action="StudentIndex">
+                                <i class="far fa-paste text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Classes</span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav_level0">
+                            <a class="nav-link position-relative" asp-controller="Students" asp-action="ViewStudentResult" asp-route-id="">
+                                <i class="far fa-paste text-gray"></i>
+                                <span class="nav-link-text text-nowrap text-dark">Course Results</span>
+                            </a>
+                        </li>
+
+                    }
+                    else
+                    {
+
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

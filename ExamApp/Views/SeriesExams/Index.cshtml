@@ -1,0 +1,161 @@
+﻿@model IEnumerable<ExamApp.Models.SeriesExam>
+@{
+    ViewData["Title"] = "Series Exam";
+}
+
+@section Css {
+    @{await Html.RenderPartialAsync("_DataTableCssPartial");}
+}
+
+@section Sole {
+    <style>
+
+
+        .table tr th:last-child {
+            width: 50px;
+        }
+
+        .table tr th {
+            text-align: center;
+        }
+
+        @@media screen and (max-width: 991px) {
+            .before-table-responsive .col-sm-12 {
+                padding: 0;
+                margin-left: 1rem;
+                margin-right: 1rem
+            }
+            /*.buttons-pdf,
+            .buttons-excel {
+                display: none;
+            }*/
+        }
+    </style>
+}
+
+<div class="container-fluid mt-4">
+    <div class="card animated fadeIn overflow-hidden">
+        <div class="card-header p-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="mb-0 skewed skewed-yellow text-dark d-inline-block text-uppercase ls-1">Series Exam</h3>
+                </div>
+                <div class="col text-right">
+                    <a asp-action="Create" class="btn btn-create">New</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body px-0 pb-2">
+            <div class="" id="table_wrapper">
+
+                <table class="table align-items-center  table-striped table-bordered" id="datatable-basic1">
+                    <thead class="thead-light">
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Course
+                            </th>
+                            <th>
+                                Exams
+                            </th>
+
+                            <th>
+                                Selected
+                            </th>
+
+
+                            <th class="text-center">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Name
+                                </td>
+
+                                <td>
+                                    @item.ClassRoom.Course.Name
+                                </td>
+                                @{
+                                    string exams = "No Exams Selected";
+                                    if (item.SeriesExamItems.Count != 0)
+                                    {
+                                        exams = "| ";
+                                        foreach (var examItem in item.SeriesExamItems)
+                                        {
+                                            exams += examItem.Exam.Name + " | ";
+                                        }
+                                    }
+                                }
+
+
+                                <td>
+                                    @exams
+                                </td>
+
+                                @if (item.SelectedExam == null)
+                                {
+                                    <td>
+                                        No Exam Selected
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @item.SelectedExam.Name
+                                    </td>
+                                }
+
+
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        @if (item.Status == 0)
+                                        {
+                                            <a class="btn btn-greenyellow btn-sm" asp-action="AddExams" asp-route-id="@item.Id">Add Exams</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-success btn-sm" >Finalized</a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script asp-append-version="true" type="text/javascript" src="~/vendor/datatable/js/jquery.dataTables.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/vendor/datatable/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#datatable-basic1').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'colvis']
+            });
+
+            table.buttons().container()
+                .appendTo('#table_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_DataTablesJsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

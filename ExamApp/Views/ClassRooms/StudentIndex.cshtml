@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ExamApp.Models.ClassRoomStudent>
+@{
+    ViewData["Title"] = "ClassRooms";
+}
+
+@section Css {
+    @{await Html.RenderPartialAsync("_DataTableCssPartial");}
+}
+
+@section Sole {
+    <style>
+
+
+        .table tr th:last-child {
+            width: 50px;
+        }
+
+        .table tr th {
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="container-fluid mt-4">
+    <div class="card animated fadeIn overflow-hidden">
+        <div class="card-header p-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="mb-0 skewed skewed-yellow text-dark d-inline-block text-uppercase ls-1">ClassRooms</h3>
+                </div>
+             
+            </div>
+        </div>
+        <div class="card-body px-0 pb-2">
+            <div class="">
+
+                <table class="table align-items-center  table-striped table-bordered" id="datatable-basic">
+                    <thead class="thead-light">
+                        <tr>
+
+                            <th>
+                                Course Name
+                            </th>
+                                <th>
+                                Course Code
+                            </th>
+
+                            <th>
+                                Section Name
+                            </th>
+                            <th>
+                                Teacher Name
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th class="text-center">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.ClassRoom.Course.Name
+                                </td>
+                                 <td>
+                                    @item.ClassRoom.Course.Code
+                                </td>
+
+                                <td>
+                                    @item.ClassRoom.Section.FullName
+                                </td>
+
+                                <td>
+                                    @item.ClassRoom.Teacher.Name
+                                </td>
+                                <td>
+                                    @item.ClassRoom.Status
+                                </td>
+                               
+                                <td class="text-center">
+                                    <div class="btn-group">
+
+                                         <a class="btn btn-success btn-sm" asp-action="Index" asp-controller="Exams" asp-route-classRoomId="@item.ClassRoom.Id">Exams</a>
+
+
+
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script asp-append-version="true" type="text/javascript" src="~/vendor/datatable/js/jquery.dataTables.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/vendor/datatable/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
